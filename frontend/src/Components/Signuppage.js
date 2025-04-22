@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function Loginpage (){
+function Signuppage (){
 
+    const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -14,7 +15,8 @@ function Loginpage (){
         e.preventDefault();
 
         try{
-            await axios.post('http://localhost:8080/auth/login',{
+            await axios.post('http://localhost:8080/auth/signup',{
+                email: email,
                 username: username,
                 password: password,
             })
@@ -23,25 +25,29 @@ function Loginpage (){
                 // console.log(response.data.token)
             })
             
+            
 
         }catch(err){
             console.error(err)
-            // setError(err.response?.data?.message || "Login failed. Please check your credentials.");
         }
         navigate('/flights');
     }
 
     return(
         <>
-            <div className="login">
+            <div className="signup">
                 <div>
                     <form>
                         <label for="username" className="username">Username</label><br/>
-                        <input type="text" id="username" name="username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
+                        <input type="text" id="username" name="username"  value={username} onChange={(e)=>setUsername(e.target.value)}/>
+                        <br/>
+                        <label for="email" className="email">Email</label><br/>
+                        <input type="email" id="email" name="email"  value={email} onChange={(e)=>setEmail(e.target.value)}/>
                         <br/>
                         <label for="password" className="password" >Password</label><br/>
-                        <input type="password" id="password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
-                        <button onClick={handleLogin} className="button">Login</button>
+                        <input type="password" id="password" name="password"  value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                        
+                        <button onClick={handleLogin} className="button">Register</button>
                     </form>
                 </div>
             </div>
@@ -49,4 +55,4 @@ function Loginpage (){
     )
 }
 
-export default Loginpage;
+export default Signuppage;

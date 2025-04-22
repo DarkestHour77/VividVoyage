@@ -24,9 +24,9 @@ server.use((req, res, next)=>{
 })
 
 //Routes
-server.use("/api/", CityRoute ) 
+server.use("/flights/", CityRoute ) 
 // server.use("/api/", LoginRoute ) 
-server.use("/api/auth/", AuthRoute ) 
+server.use("/auth/", AuthRoute ) 
 
 
 

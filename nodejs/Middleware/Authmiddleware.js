@@ -1,16 +1,31 @@
+const jwt = require("jsonwebtoken");
+const { secretKey } = require("../Controllers/AuthController");
 
 
 function AuthenticateUser (req,res,next){
-    const PASSWORD = req.PASSWORD
+    
+    const token = req.headers?.authorization?.split(" ")[1];
 
-    const headers = req.headers;
-    const authorization = headers.authorization;
-
-    if(authorization === PASSWORD){
-        next();
+    if(!token){
+        res.status(401).json({
+            success:false,
+            message:"autentication required"
+        })
     }else{
-        res.status(403).json({message: "password wrong"});
+        jwt.verify(token, secretKey,(error, decodedMessage)=>{
+            if(error){
+                res.status(401).json({
+                    success:false,
+                    message:"invalid token"
+                })
+            }else{
+                req.userId = decodedMessage.user
+                next();
+            }
+        })
     }
+    
+
 }
 
-module.exports = AuthenticateUser;
+module.exports =  AuthenticateUser ;

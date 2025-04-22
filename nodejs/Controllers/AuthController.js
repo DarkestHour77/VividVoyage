@@ -1,8 +1,8 @@
 const USerSchema = require("../Model/USerSchema");
 const jwt =require("jsonwebtoken")
+const bcrypt = require("bcrypt")
 
-
-secretKey = "asdadadadaadaad"
+ const secretKey = "asdadadadaadaad";
 
 
 async function signup(req, res) {
@@ -11,18 +11,31 @@ async function signup(req, res) {
     const password = body.password;
     const email = body.email;  
 
+    const salt = await bcrypt.genSalt()
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const userObject ={
         username,
-        password,
+        password: hashedPassword,
         email,
     }
 
     const userCollectionObject = new USerSchema(userObject);
     const response = await userCollectionObject.save();
 
+    console.log("whats in response",response)
+
+    const authData = {
+        user: {id: response._id}
+    }
+    const token = jwt.sign(authData, secretKey,{expiresIn: "600000"})
+
+
+
     res.status(201).json({
         success: true,
         user: response,
+        token
     })
 }
 
@@ -37,7 +50,10 @@ async function login(req, res){
     }
 
     const foundUser = await USerSchema.find({username: username});
-    console.log(foundUser);
+    // console.log(foundUser);
+
+    
+
     if(!foundUser || foundUser.length === 0 ){
         res.status(401).json({ 
             success: false,
@@ -45,11 +61,13 @@ async function login(req, res){
         })
     }else {
         const user = foundUser[0];
-        if(password === user.password){
+        const isPasswordMatched = await bcrypt.compare(password, foundUser[0].password)
+
+        if(isPasswordMatched){
             const authData = {
                 user: {id: user._id}
             }
-            const token = jwt.sign(authData, secretKey)
+            const token = jwt.sign(authData, secretKey,{expiresIn: "600000"})
 
             res.status(200).json({
                 success: true,
@@ -73,4 +91,4 @@ async function login(req, res){
 
 
 
-module.exports = {login, signup}
+module.exports = {login, signup, secretKey}

@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import Hotels from "./Hotels";
 import Planes from "./Planes";
 import Loginpage from "./Loginpage";
+import Signuppage from "./Signuppage";
 
 function Router(){
     return(
@@ -16,6 +17,7 @@ function Router(){
                         <Route path="/hotels" element={<Hotels />}  />
                         <Route path="/login" element={<Loginpage />}  />
                         <Route path="/flights/search" element={<Planes />}  />
+                        <Route path="/signup" element={<Signuppage />}  />
                     </Route>
 
                 </Routes>

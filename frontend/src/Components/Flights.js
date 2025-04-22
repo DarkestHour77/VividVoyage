@@ -41,6 +41,10 @@ function Flights(){
                     to: selectedToCity,
                     departDate: departDate,
                     returnDate: returnDate,
+            },{
+                headers:{
+                    'Authorization': "bearer " + localStorage.getItem("token")
+                }
             });
         }catch (err)  {
             console.error(err);
