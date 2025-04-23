@@ -25,7 +25,6 @@ server.use((req, res, next)=>{
 
 //Routes
 server.use("/flights/", CityRoute ) 
-// server.use("/api/", LoginRoute ) 
 server.use("/auth/", AuthRoute ) 
 
 

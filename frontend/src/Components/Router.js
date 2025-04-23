@@ -5,6 +5,7 @@ import Hotels from "./Hotels";
 import Planes from "./Planes";
 import Loginpage from "./Loginpage";
 import Signuppage from "./Signuppage";
+import Dashboard from "./Dashboard";
 
 function Router(){
     return(
@@ -18,6 +19,7 @@ function Router(){
                         <Route path="/login" element={<Loginpage />}  />
                         <Route path="/flights/search" element={<Planes />}  />
                         <Route path="/signup" element={<Signuppage />}  />
+                        <Route path="/dashboard" element={<Dashboard />}  />
                     </Route>
 
                 </Routes>
