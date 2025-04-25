@@ -6,6 +6,7 @@ import Planes from "./Planes";
 import Loginpage from "./Loginpage";
 import Signuppage from "./Signuppage";
 import Dashboard from "./Dashboard";
+import Adminpanel from "./Adminpanel";
 
 function Router(){
     return(
@@ -20,6 +21,8 @@ function Router(){
                         <Route path="/flights/search" element={<Planes />}  />
                         <Route path="/signup" element={<Signuppage />}  />
                         <Route path="/dashboard" element={<Dashboard />}  />
+                        <Route path="/adminpanel" element={<Adminpanel />}  />
+
                     </Route>
 
                 </Routes>
