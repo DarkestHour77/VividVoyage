@@ -36,16 +36,27 @@ function Flights(){
 
         try{
             console.log("Sending request to server...");
-            await axios.post('http://localhost:8080/flights/cities',{
-                    from: selectedFromCity,
-                    to: selectedToCity,
-                    departDate: departDate,
-                    returnDate: returnDate,
+            const response = await axios.post('http://localhost:8080/flights/cities',{
+                    origin: selectedFromCity,
+                    destination: selectedToCity,
+                    departureTime: departDate,
+                    arrivalTime: returnDate,
             },{
                 headers:{
-                    'Authorization': "bearer " + localStorage.getItem("token")
+                    'Authorization': "bearer " + localStorage.getItem("token"),
                 }
             });
+
+            // localStorage.setItem("searchParams", JSON.stringify({
+            //         origin: selectedFromCity,
+            //         destination: selectedToCity,
+            //         departureTime: departDate,
+            //         arrivalTime: returnDate,
+            // }));
+
+            localStorage.setItem("searchParams", JSON.stringify(response.data))
+            console.log(response.data)
+
         }catch (err)  {
             console.error(err);
           }
@@ -66,8 +77,8 @@ function Flights(){
                     <div class="select">
                         
                         <select 
-                            id="fromcity"
-                            name="fromcity"
+                            id="origin"
+                            name="origin"
                             value={selectedFromCity}
                             onChange={(e)=> setSelectedFromCity(e.target.value)}
                         >
@@ -84,8 +95,8 @@ function Flights(){
                     <p>To</p>
                     <div class="select">
                     <select 
-                            id="tocity"
-                            name="tocity"
+                            id="destination"
+                            name="destination"
                             value={selectedToCity}
                             onChange={(e)=> setSelectedToCity(e.target.value)}
                         >
@@ -103,8 +114,8 @@ function Flights(){
                     <div className="select">
                         <input 
                             type="date"
-                            id="depart"
-                            name="depart"
+                            id="departureTime"
+                            name="departureTime"
                             value={departDate}
                             onChange={(e)=> setDepartDate(e.target.value)}
                         />
@@ -115,8 +126,8 @@ function Flights(){
                     <div class="select">
                        <input
                             type="date"
-                            id="return"
-                            name="return"
+                            id="arrivalTime"
+                            name="arrivalTime"
                             value={returnDate}
                             onChange={(e)=> setReturnDate(e.target.value)}
                         /> 

@@ -91,13 +91,11 @@ function Adminpanel() {
         setFilterflights(results)
     },[searchTerm, flights]);
     
-    {/* prev flight used */}
     const handleInputChange = (e) => {
         const { name, value} = e.target;
         setFormData(prevData=> ({...prevData, [name]:value}))
     }
 
-    {/* prev flight not used */}
     const handleAddFlights = async () => {
         try{
             setIsLoading(true);
@@ -132,7 +130,6 @@ function Adminpanel() {
         setFormData(formattedFlight);
     }
 
-    {/* prev flight not used */}
     const handleUpdateFlight = async () => { 
         try{
             setIsLoading(true);
@@ -151,7 +148,6 @@ function Adminpanel() {
         }
     }
 
-    {/* prev flight not used */}
     const handleDeleteFlight = async(id) =>{
 
         if(window.confirm('Are you sure you wanna delete this Flight')){

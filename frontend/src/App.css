@@ -228,10 +228,12 @@ ul{
   padding: 10px 55px;
 }
 .three h5{
-  font-weight: normal;
+  /* font-weight: normal; */
+  text-decoration: underline;
 }
 .three p{
-  font-size: small;
+  /* font-size: small; */
+  text-decoration: underline;
 }
 
 
