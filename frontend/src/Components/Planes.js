@@ -7,30 +7,90 @@ function Planes({onSidebarChange}){
 
     
     const [selectedAirlines, setSelectedAirlines] = useState([]);
-    const [status, setStatus] = useState([]);
-    const [departure, setDeparture] = useState();
-    const [arrival, setArrival] = useState();
+    const [selectedStatus, setselectedStatus] = useState([]);
+    const [departurePeriod, setDeparturePeriod] = useState();
+    const [arrivalPeriod, setArrivalPeriod] = useState();
 
     //////////////////////////////////////////////////
 
     const [flights, setFlights] = useState([])
     const [filterData, setFilterData] = useState()
+    const [filteredFlights, setFilteredFlights] = useState([])
 
     useEffect(()=>{
         const search = localStorage.getItem("searchParams")
         const searchparse = JSON.parse(search)
       console.log(searchparse)
       setFlights(searchparse);
+    //   applyFilters()
+    //   setFilteredFlights(searchparse)
     },[])
 
     useEffect(()=>{
-        const result = flights.filter(flight=>
-            flight.flightName.includes(filterData )
-        )
-        setFilterData(result)
-    },[filterData])
+       applyFilters();
+    },[flights, selectedAirlines, selectedStatus, departurePeriod, arrivalPeriod ])
+
+    const handleAirlineChange = (flightName) => {
+        if (selectedAirlines.includes(flightName)) {
+            setSelectedAirlines(selectedAirlines.filter(name => name !== flightName));
+        } else {
+            setSelectedAirlines([...selectedAirlines, flightName]);
+        }
+    };
     
-   const calculateDuration = (departure, arrival) =>{
+    const handleStatusChange = (status) =>{
+        if(selectedStatus.includes(status)){
+            setselectedStatus(selectedStatus.filter(s=> s !== status))
+        }else{
+            setselectedStatus([...selectedStatus, status])
+        }
+    }
+    const handleDepartureChange = (period) =>{
+        setDeparturePeriod(period)
+    }
+    const handleArrivalChange = (period) =>{
+        setArrivalPeriod(period)
+    }
+    
+    const applyFilters = () =>{
+        let result = [...flights];
+
+        if(selectedAirlines.length > 0){
+            result = result.filter(flight => selectedAirlines.includes(flight.flightName))
+        }
+        console.log(result)
+
+        if(selectedStatus.length > 0 ){
+            result = result.filter(flight => selectedStatus.includes(flight.status))
+        }
+        if(departurePeriod){
+            result = result.filter(flight => isTimeInPeriod(flight.departureTime, departurePeriod))
+        }
+        if(arrivalPeriod){
+            result = result.filter(flight => isTimeInPeriod(flight.arrivalTime, arrivalPeriod))
+        }
+
+        setFilteredFlights(result);
+    }
+    
+    const isTimeInPeriod = (time,period) =>{
+        const hour = moment(time).hour();
+
+        switch (period){
+            case "Before 06:00":
+                return hour < 6;
+            case "06:00 to 12:00":
+                return hour >= 6 && hour < 12;
+            case "12:00 to 18:00":
+                return hour >= 12 && hour < 18;
+            case "After 18:00":
+                return hour >= 18;
+            default:
+                return true;
+        }
+    }
+
+    const calculateDuration = (departure, arrival) =>{
         const start = moment(departure);
         const end = moment(arrival)
         const duration = moment.duration(end.diff(start))
@@ -39,7 +99,8 @@ function Planes({onSidebarChange}){
         return `${hours}h ${minutes}m`;
    }
        
-    
+   const timePeriods = ["Before 06:00", "06:00 to 12:00", "12:00 to 18:00", "After 18:00"] 
+
     return(
 
        
@@ -51,14 +112,15 @@ function Planes({onSidebarChange}){
             <div className="airlines">
                 <p>Airlines</p>
                 {flights.map((flight) =>(
-                    <div key={flight.id} >
+                    <div key={flight.flightName} >
                         <input 
                             type="checkbox"
-                            id={flight.id}
-                            value={filterData}
-                            onChange={(e)=>setFilterData(e.target.value)}
+                            id={flight.flightName}
+                            // value={filterData}
+                            checked={selectedAirlines.includes(flight.flightName)}
+                            onChange={()=>handleAirlineChange(flight.flightName)}
                         />
-                        <label for={flight.id} >
+                        <label htmlFor={flight.flightName} >
                             {flight.flightName}
                         </label>
                         
@@ -66,16 +128,16 @@ function Planes({onSidebarChange}){
                 ))}
             </div>
             
-            <div className="stops">
+            <div className="status">
                 <p>Stops in Journey</p>
                 {flights.map((flight)=>(
-                    <label key={flight.id} >
+                    <label key={flight.status} >
                         <input 
                             type="checkbox"
                             name="status"
                             value={flight.status}
-                            // checked={status.includes(flight.status)}
-                            // onChange={()=>handleStopsChange(stop)}
+                            checked={selectedStatus.includes(flight.status)}
+                            onChange={()=>handleStatusChange(flight.status)}
                         />
                         {flight.status}
                     </label>
@@ -85,43 +147,53 @@ function Planes({onSidebarChange}){
             <div class="traveltime">
                 <div className="departure">
                     <p>Departure Time</p>
-                    {selectedAirlines.map((dep)=>(  
-                        <label key={dep} >
+                    {timePeriods.map((period)=>(  
+                        <label key={`departure-${period}`} >
                             <input
                                 type="radio"
                                 name="departureTime"
-                                value={dep}
-                                checked={departure === dep}
-                                // onChange={handleDepartureChange}
+                                id={`departure-${period}`}
+                                value={period}
+                                checked={departurePeriod === period}
+                                onChange={()=> handleDepartureChange(period)}
                             />
-                            {dep}
+                            {period}
                         </label>
                     ))}
                 </div>
                 
                 <div className="arrival">
                     <p>Arrival Time</p>
-                    {["Before 6AM","6AM to 12PM","12PM to 6PM","After 6PM"].map((arr)=>(
-                        <label key={arr} >
+                    {timePeriods.map((period)=>(
+                        <label key={`arrival-${period}`} >
                             <input
                                 type="radio"
+                                id={`arrival-${period}`}
                                 name="arrival"
-                                value={arr}
-                                checked={arrival === arr}
-                                // onChange={handleArrivalChange}
+                                value={period}
+                                checked={arrivalPeriod === period}
+                                onChange={()=> handleArrivalChange(period)}
                             />
-                            {arr}
+                            {period}
                         </label>
                     ))}
                 </div>
             </div>
+            <button onClick={()=>{
+                setSelectedAirlines([]);
+                setselectedStatus([]);
+                setDeparturePeriod("");
+                setArrivalPeriod("")
+            }}>Reset</button>
         </div>
 
 
 
+
         <div className="planes">
-            {flights.map(flight=>(
-                <div class="plane info">
+            {filteredFlights.length > 0 ?(
+            filteredFlights.map(flight=>(
+                <div class="plane info" key={flight.id || flight.fl}>
                     <div class="column one">
                         <h5>{flight.flightName}</h5>
                         <p>{flight.flightNumber}</p>
@@ -143,7 +215,12 @@ function Planes({onSidebarChange}){
                         <p>${flight.price}</p>
                     </div>
                 </div>
-            ))}    
+            ))   
+        ): (
+            <div>
+                <p>No Flights match your Filter!</p>
+            </div>
+        )}
         </div>
 
         </div>
