@@ -23,8 +23,6 @@ async function signup(req, res) {
     const userCollectionObject = new USerSchema(userObject);
     const response = await userCollectionObject.save();
 
-    console.log("whats in response",response)
-
     const authData = {
         user: {id: response._id}
     }
@@ -50,7 +48,6 @@ async function login(req, res){
     }
 
     const foundUser = await USerSchema.find({username: username});
-    // console.log(foundUser);
 
     
 
@@ -67,7 +64,7 @@ async function login(req, res){
             const authData = {
                 user: {id: user._id}
             }
-            const token = jwt.sign(authData, secretKey,{expiresIn: "600000"})
+            const token = jwt.sign(authData, secretKey,{expiresIn: "100000"})
 
             res.status(200).json({
                 success: true,

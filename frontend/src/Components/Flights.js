@@ -1,7 +1,5 @@
-import Select from "react-select"
-import Planes from "./Planes"
 import { useMemo, useState } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Homepage from "./Homepage"
 import { fakerEN_US as faker } from "@faker-js/faker"
 import axios from "axios"
@@ -35,7 +33,6 @@ function Flights(){
         e.preventDefault();
 
         try{
-            console.log("Sending request to server...");
             const response = await axios.post('http://localhost:8080/flights/cities',{
                     origin: selectedFromCity,
                     destination: selectedToCity,
@@ -47,21 +44,13 @@ function Flights(){
                 }
             });
 
-            // localStorage.setItem("searchParams", JSON.stringify({
-            //         origin: selectedFromCity,
-            //         destination: selectedToCity,
-            //         departureTime: departDate,
-            //         arrivalTime: returnDate,
-            // }));
-
             localStorage.setItem("searchParams", JSON.stringify(response.data))
-            console.log(response.data)
 
         }catch (err)  {
             console.error(err);
           }
 
-          Navigate("/flights/search")
+          Navigate("/flights/cities")
     }
 
    

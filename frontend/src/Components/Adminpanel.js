@@ -1,6 +1,7 @@
 import { useEffect, useState} from "react"
 import { Search, Plus, Edit, Trash2, Save, X, RefreshCw } from 'lucide-react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 
 const getFlights = async () => {
@@ -41,6 +42,9 @@ const deleteFlight = async (id) =>{
 
 function Adminpanel() {
 
+    const navigate = useNavigate()
+
+   
     const[flights,setFlights] = useState([]);
     const[filterflights, setFilterflights] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -73,6 +77,11 @@ function Adminpanel() {
 
     useEffect(() => {
         loadFlights();
+        const isAdmin = localStorage.getItem("isAdmin")
+        const isAdminParse = JSON.parse(isAdmin)
+        if(!isAdminParse){
+           navigate('/flights/')
+        }
     }, []);
     
     useEffect(()=>{

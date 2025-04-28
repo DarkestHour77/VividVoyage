@@ -6,6 +6,7 @@ const PORT = 8080;
 const CityRoute = require("./Routes/CityRoute")
 const AdminRoute = require("./Routes/AdminRoute")
 const AuthRoute = require("./Routes/AuthRoute")
+const BookingRoute = require("./Routes/BookingRoute")
 const dotenv = require("dotenv")
 
 
@@ -23,6 +24,7 @@ server.use((req, res, next)=>{
 //Routes
 server.use("/flights/", CityRoute ) 
 server.use("/auth/", AuthRoute ) 
+server.use("/flights/cities/", BookingRoute)
 server.use("/admin/", AdminRoute)
 
 

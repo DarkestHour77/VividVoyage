@@ -2,21 +2,6 @@ const CitySchema = require("../Model/CitiesSchema")
 const Flights = require('../Model/FlightsSchema')
 const moment = require('moment')
 
-async function TravelEntryData (req, res) {
-    // try {
-    //     const city = new CitySchema({
-    //         from: req.body.from,
-    //         to: req.body.to,
-    //         departDate: req.body.departDate,
-    //         returnDate: req.body.returnDate,
-    //     });
-    //     await city.save();
-    //     res.status(201).json({message: "City saved"});
-    // } catch(error) {
-    //     console.error("Error details:", error);
-    //     res.status(500).json({error: error.message});    }
-}
-
 async function findFlights(req, res){
     const body = req.body;
     const origin = body.origin;
@@ -25,7 +10,6 @@ async function findFlights(req, res){
     const arrivalTime = body.arrivalTime;
 
     try{
-        // console.log(departureTime)
         const flight = await Flights.find({
             origin,
             destination,
@@ -38,4 +22,4 @@ async function findFlights(req, res){
     }
 }
 
-module.exports = { TravelEntryData, findFlights }
+module.exports = { findFlights }

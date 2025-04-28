@@ -1,29 +1,30 @@
 import { useEffect, useState } from "react";
-import { faker } from "@faker-js/faker"
 import  axios  from "axios"
 import moment from 'moment'
+import { useNavigate } from "react-router-dom";
 
-function Planes({onSidebarChange}){
+function Planes(){
+
+    const navigate = useNavigate()
 
     
+    const [flights, setFlights] = useState([])
+    const [filteredFlights, setFilteredFlights] = useState([])
     const [selectedAirlines, setSelectedAirlines] = useState([]);
     const [selectedStatus, setselectedStatus] = useState([]);
     const [departurePeriod, setDeparturePeriod] = useState();
     const [arrivalPeriod, setArrivalPeriod] = useState();
 
-    //////////////////////////////////////////////////
-
-    const [flights, setFlights] = useState([])
-    const [filterData, setFilterData] = useState()
-    const [filteredFlights, setFilteredFlights] = useState([])
-
     useEffect(()=>{
         const search = localStorage.getItem("searchParams")
         const searchparse = JSON.parse(search)
-      console.log(searchparse)
-      setFlights(searchparse);
-    //   applyFilters()
-    //   setFilteredFlights(searchparse)
+        if(searchparse){
+            setFlights(searchparse);
+
+        }else{
+            
+            navigate("/login")
+        }
     },[])
 
     useEffect(()=>{
@@ -58,7 +59,6 @@ function Planes({onSidebarChange}){
         if(selectedAirlines.length > 0){
             result = result.filter(flight => selectedAirlines.includes(flight.flightName))
         }
-        console.log(result)
 
         if(selectedStatus.length > 0 ){
             result = result.filter(flight => selectedStatus.includes(flight.status))
@@ -97,6 +97,25 @@ function Planes({onSidebarChange}){
         const hours = duration.hours()
         const minutes = duration.minutes();
         return `${hours}h ${minutes}m`;
+   }
+
+   const handleSubmit = async(flight) =>{
+        try{
+            const response = await axios.post('http://localhost:8080/flights/cities/booking',{
+                origin: flight.origin,
+                destination: flight.destination,
+                departureTime: flight.departureTime,
+                arrivalTime: flight.arrivalTime,
+                flightName: flight.flightName,
+                flightNumber: flight.flightNumber,
+                price: flight.price,
+
+            })
+        }catch(err){
+            console.error(err)
+        }finally{
+            navigate('/flights/cities/booking')
+        }
    }
        
    const timePeriods = ["Before 06:00", "06:00 to 12:00", "12:00 to 18:00", "After 18:00"] 
@@ -187,13 +206,10 @@ function Planes({onSidebarChange}){
             }}>Reset</button>
         </div>
 
-
-
-
         <div className="planes">
             {filteredFlights.length > 0 ?(
-            filteredFlights.map(flight=>(
-                <div class="plane info" key={flight.id || flight.fl}>
+            filteredFlights.map((flight, i)=>(
+                <div class="plane info" key={flight.id }>
                     <div class="column one">
                         <h5>{flight.flightName}</h5>
                         <p>{flight.flightNumber}</p>
@@ -214,6 +230,7 @@ function Planes({onSidebarChange}){
                         <h5>Price</h5>
                         <p>${flight.price}</p>
                     </div>
+                     <button onClick={()=> handleSubmit(flights[i])}>Booking</button>
                 </div>
             ))   
         ): (
