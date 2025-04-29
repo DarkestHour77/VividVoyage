@@ -132,6 +132,7 @@ function Planes(){
                 <p>Airlines</p>
                 {flights.map((flight) =>(
                     <div key={flight.flightName} >
+                        <label htmlFor={flight.flightName} >
                         <input 
                             type="checkbox"
                             id={flight.flightName}
@@ -139,7 +140,6 @@ function Planes(){
                             checked={selectedAirlines.includes(flight.flightName)}
                             onChange={()=>handleAirlineChange(flight.flightName)}
                         />
-                        <label htmlFor={flight.flightName} >
                             {flight.flightName}
                         </label>
                         
@@ -148,7 +148,7 @@ function Planes(){
             </div>
             
             <div className="status">
-                <p>Stops in Journey</p>
+                <p>Status Of Flights</p>
                 {flights.map((flight)=>(
                     <label key={flight.status} >
                         <input 
@@ -198,7 +198,9 @@ function Planes(){
                     ))}
                 </div>
             </div>
-            <button onClick={()=>{
+            <button
+            className="sidebarButton"
+            onClick={()=>{
                 setSelectedAirlines([]);
                 setselectedStatus([]);
                 setDeparturePeriod("");
@@ -209,32 +211,35 @@ function Planes(){
         <div className="planes">
             {filteredFlights.length > 0 ?(
             filteredFlights.map((flight, i)=>(
-                <div class="plane info" key={flight.id }>
-                    <div class="column one">
-                        <h5>{flight.flightName}</h5>
-                        <p>{flight.flightNumber}</p>
+                <div>
+                    <div class="plane info" key={flight.id }>
+                        <div class="column one">
+                            <h5>{flight.flightName}</h5>
+                            <p>{flight.flightNumber}</p>
+                        </div>
+                        <div class="column two">
+                            <h5>{moment(flight.departureTime).format('HH:mm')} </h5>
+                            <p>{flight.origin}</p>
+                        </div>
+                        <div class="column three">
+                            <h5>{calculateDuration(flight.departureTime, flight.arrivalTime)}</h5>
+                            <p>{flight.status}</p>
+                        </div>
+                        <div class="column four">
+                            <h5>{moment(flight.arrivalTime).format('HH:mm')}</h5>
+                            <p>{flight.destination}</p>
+                        </div>
+                        <div class="column five">
+                            <h5>Price</h5>
+                            <p>${flight.price}</p>
+                        </div>
+                         <button onClick={()=> handleSubmit(flights[i])}  >Booking</button>
                     </div>
-                    <div class="column two">
-                        <h5>{moment(flight.departureTime).format('HH:mm')} </h5>
-                        <p>{flight.origin}</p>
-                    </div>
-                    <div class="column three">
-                        <h5>{calculateDuration(flight.departureTime, flight.arrivalTime)}</h5>
-                        <p>{flight.status}</p>
-                    </div>
-                    <div class="column four">
-                        <h5>{moment(flight.arrivalTime).format('HH:mm')}</h5>
-                        <p>{flight.destination}</p>    
-                    </div>
-                    <div class="column five">
-                        <h5>Price</h5>
-                        <p>${flight.price}</p>
-                    </div>
-                     <button onClick={()=> handleSubmit(flights[i])}>Booking</button>
+                    <hr />
                 </div>
             ))   
         ): (
-            <div>
+            <div className="noflights">
                 <p>No Flights match your Filter!</p>
             </div>
         )}

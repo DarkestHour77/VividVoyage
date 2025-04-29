@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react";
+import moment from "moment"
 
 function Booking(){
 
@@ -21,19 +22,19 @@ function Booking(){
     return(
         <>
             <div className="booking">
-                <div className="">
+                <div className="allbookings">
                     {booking.map(flight =>(
-                        <div className="">
-                            <div className="">
+                        <div className="bookingdata">
+                            <div className="bookingflightroute">
                                 <p>{flight.origin} → {flight.destination} </p>
                             </div>
-                            <div className="">
-                                <p>{flight.departureTime} → {flight.arrivalTime} </p>
+                            <div className="bookingflighttime">
+                                <p>{ moment(flight.departureTime).format('MMMM Do YYYY, h:mm a')} → { moment(flight.arrivalTime).format('MMMM Do YYYY, h:mm a')} </p>
                             </div>
-                            <div className="">
+                            <div className="bookingflightdetails">
                                 <p>{flight.flightName} → {flight.flightNumber} </p>
                             </div>
-                            <div> ${flight.price} </div>
+                            <div className="bookingflightprice"> ${flight.price} </div>
                         </div>
                     ))}
                 </div>

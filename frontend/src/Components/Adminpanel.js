@@ -214,7 +214,7 @@ function Adminpanel() {
 
 
    return(
-        <div>
+        <div className="admin-panel-container">
             <div className="adminpanelheader">
                 <h2>Flight Management Admin Panel</h2>
             </div>    
@@ -249,15 +249,15 @@ function Adminpanel() {
 
            { /* Add form */}
            {showAddForm &&(
-            <div className="">
-                <div className="">
+            <div className="addform">
+                <div className="canceladd">
                     <h2 >Add New Flights</h2>
                     <button onClick={cancelAdd} >
                         <X size={18} />
                     </button>
                 </div>
-                <div className="">
-                    <div className="">
+                <div className="flightform">
+                    <div className="flightnumber">
                         <label>Flight Number</label>
                         <input
                             type="text"
@@ -267,7 +267,7 @@ function Adminpanel() {
                             required
                         />
                     </div>
-                    <div className="">
+                    <div className="flightname">
                         <label>Flight Name</label>
                         <input
                             type="text"
@@ -277,7 +277,7 @@ function Adminpanel() {
                             required
                         />
                     </div>
-                    <div className="">
+                    <div className="origin">
                         <label>Origin</label>
                         <input
                             type="text"
@@ -287,7 +287,7 @@ function Adminpanel() {
                             required
                         />
                     </div>
-                    <div className="">
+                    <div className="destination">
                         <label>Destination</label>
                         <input
                             type="text"
@@ -297,7 +297,7 @@ function Adminpanel() {
                             required
                         />
                     </div>
-                    <div className="">
+                    <div className="departure">
                         <label>Departure Time</label>
                         <input
                             type="datetime-local"
@@ -307,7 +307,7 @@ function Adminpanel() {
                             required
                         />
                     </div>
-                    <div className="">
+                    <div className="arrival">
                         <label>Arrival Time</label>
                         <input
                             type="datetime-local"
@@ -317,7 +317,7 @@ function Adminpanel() {
                             required
                         />
                     </div>
-                    <div className="">
+                    <div className="price">
                         <label>Price ($)</label>
                         <input
                             type="text"
@@ -327,7 +327,7 @@ function Adminpanel() {
                             required
                         />
                     </div>
-                    <div className="">
+                    <div className="status">
                         <label>Status</label>
                         <select 
                             name="status"
@@ -349,7 +349,7 @@ function Adminpanel() {
             )}
 
             {/* Flight Table */}
-            <div className="">
+            <div className="flighttable">
                 {isLoading ? (
                     <div>
                         <RefreshCw size={25} />
@@ -373,40 +373,44 @@ function Adminpanel() {
                             {filterflights.map(flight =>(
                                 <tr key={flight._id}>
                                     {editing === flight._id ?(
-                                        <>
-                                            <td>
-                                                <input 
-                                                    type="text"
-                                                    name="flightNumber"
-                                                    value={formData.flightNumber}
-                                                    onChange={handleInputChange}
-                                                /> 
-                                                <input
-                                                    type="text"
-                                                    name="flightName"
-                                                    value={formData.flightName}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                />
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <input 
-                                                        type="text"
-                                                        name="origin"
-                                                        value={formData.origin}
-                                                        onChange={handleInputChange}
-                                                    /> 
-                                                    <span>→</span>
-                                                    <input 
-                                                        type="text"
-                                                        name="destination"
-                                                        value={formData.destination}
-                                                        onChange={handleInputChange}
-                                                    /> 
-                                                </div>
-                                            </td>
-                                            <td>
+                                        <div className="editflightdata">
+                                            <div class="editflightandroute">
+                                                <td>
+                                                    <div class="editflight">
+                                                        <input
+                                                            type="text"
+                                                            name="flightNumber"
+                                                            value={formData.flightNumber}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            name="flightName"
+                                                            value={formData.flightName}
+                                                            onChange={handleInputChange}
+                                                            required
+                                                        />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="editroute">
+                                                        <input
+                                                            type="text"
+                                                            name="origin"
+                                                            value={formData.origin}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                        <span>→</span>
+                                                        <input
+                                                            type="text"
+                                                            name="destination"
+                                                            value={formData.destination}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                    </div>
+                                                </td>
+                                            </div>
+                                            <td className="editdeparture">
                                                 <input 
                                                     type="datetime-local"
                                                     name="departureTime"
@@ -414,7 +418,7 @@ function Adminpanel() {
                                                     onChange={handleInputChange}
                                                 /> 
                                             </td>
-                                            <td>
+                                            <td className="editarrival">
                                                 <input 
                                                     type="datetime-local"
                                                     name="arrivalTime"
@@ -422,7 +426,7 @@ function Adminpanel() {
                                                     onChange={handleInputChange}
                                                 /> 
                                             </td>
-                                            <td>
+                                            <td className="editprice">
                                                 <input 
                                                     type="number"
                                                     name="price"
@@ -430,7 +434,7 @@ function Adminpanel() {
                                                     onChange={handleInputChange}
                                                 /> 
                                             </td>
-                                            <td>
+                                            <td className="editstatus">
                                                 <select 
                                                     name="status"
                                                     value={formData.status}
@@ -443,36 +447,38 @@ function Adminpanel() {
                                                 </select>
                                             </td>
                                             <td>
-                                                <button onClick={handleUpdateFlight} >
+                                                <button className="editsave" onClick={handleUpdateFlight} >
                                                     <Save size={18} />
                                                 </button>
-                                                <button onClick={cancelEdit} >
+                                                <button className="editcancel" onClick={cancelEdit} >
                                                     <X size={18} />
                                                 </button>
                                             </td>
-                                        </>
+                                        </div>
+                                
                                     ) : (
                                         <>
-                                            <td>{flight.flightNumber}</td>
-                                            <td>{flight.flightName}</td>
-                                            <td>{flight.origin} → {flight.destination}</td>
-                                            <td>{formatDateTime(flight.departureTime)}</td>
-                                            <td>{formatDateTime(flight.arrivalTime)}</td>
-                                            <td>${flight.price}</td>
-                                            <td>
-                                                <span >  {/* might need to delete */}
-
-                                                {flight.status}
+                                            <div class="adminflights">
+                                                <td className="adminflightnumber">{flight.flightNumber}</td>
+                                                <td className="adminflightname">{flight.flightName}</td>
+                                                <td className="adminroute">{flight.origin} → {flight.destination}</td>
+                                                <td className="admindeparture">{formatDateTime(flight.departureTime)}</td>
+                                                <td className="adminarrival">{formatDateTime(flight.arrivalTime)}</td>
+                                                <td className="adminprice">${flight.price}</td>
+                                                <td className="adminstatus">
+                                                <span className={`status-badge ${flight.status.toLowerCase().replace(' ', '-')}`}>
+                                                    {flight.status}
                                                 </span>
-                                            </td>
-                                            <td>
-                                                <button onClick={()=> handleEditClick(flight)}>
-                                                    <Edit size={18} />
-                                                </button>
-                                                <button onClick={()=> handleDeleteFlight(flight._id)}>
-                                                    <Trash2 size={18} />
-                                                </button>
-                                            </td>
+                                                </td>
+                                                <td className="adminbutton">
+                                                    <button className="admineditbutton" onClick={()=> handleEditClick(flight)}>
+                                                        <Edit size={18} />
+                                                    </button>
+                                                    <button className="admindeletebutton" onClick={()=> handleDeleteFlight(flight._id)}>
+                                                        <Trash2 size={18} />
+                                                    </button>
+                                                </td>
+                                            </div>
                                         </>
                                     )}
                                 </tr>

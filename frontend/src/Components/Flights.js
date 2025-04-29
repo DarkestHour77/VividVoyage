@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import Homepage from "./Homepage"
 import { fakerEN_US as faker } from "@faker-js/faker"
 import axios from "axios"
 
@@ -9,18 +8,18 @@ function Flights(){
 
     const Navigate = useNavigate();
     
-    faker.seed(220);
+    // faker.seed(220);
     // const ci
 
-    const cities = useMemo(() => {
-        const cityset = new Set();
+    // const cities = useMemo(() => {
+    //     const cityset = new Set();
 
-        while(cityset.size < 100){
-            cityset.add(faker.location.city());
-        }
+    //     while(cityset.size < 100){
+    //         cityset.add(faker.location.city());
+    //     }
 
-        return Array.from(cityset);
-    },[])
+    //     return Array.from(cityset);
+    // },[])
 
     const [selectedFromCity, setSelectedFromCity] = useState("");
     const [selectedToCity, setSelectedToCity] = useState("");
@@ -58,7 +57,6 @@ function Flights(){
 
     return(
         <>
-        {/* <Navbar /> */}
         <div className="travel template">
             <div className="travel plan">
                 <div className="travel from">
@@ -72,7 +70,7 @@ function Flights(){
                             onChange={(e)=> setSelectedFromCity(e.target.value)}
                         >
                             <option value="">-- Choose a city --</option>
-                            {cities.map((city,index) => (
+                            {['Mumbai', 'Delhi', 'Kolkata'].map((city,index) => (
                                 <option key={index} value={city}  >
                                     {city}
                                 </option>
@@ -90,7 +88,7 @@ function Flights(){
                             onChange={(e)=> setSelectedToCity(e.target.value)}
                         >
                             <option value="">-- Choose a city --</option>
-                            {cities.map((city,index) => (
+                            {['Delhi', 'Mumbai', 'Kolkata'].map((city,index) => (
                                 <option key={index} value={city}  >
                                     {city}
                                 </option>
@@ -98,7 +96,7 @@ function Flights(){
                         </select>
                     </div>
                 </div>
-                <div className="travel departure">
+                <div className="travel depart">
                     <p>Departure</p>
                     <div className="select">
                         <input 
@@ -125,12 +123,10 @@ function Flights(){
             </div>
         </div>
             <div className="search button">
-                <button type="button"  onClick={handleSubmit}>
+                <button type="button" className="searchbutton" onClick={handleSubmit}>
                     SEARCH
                 </button>
             </div>
-        
-        <Homepage />
         </>
     )
 }

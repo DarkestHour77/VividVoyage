@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
+import moment from "moment"
 
 
 function Dashboard(){
@@ -34,11 +35,11 @@ function Dashboard(){
                             <div key={plane.id} className="bookeddetails">
                                 <p>{plane.origin}</p>
                                 <p>{plane.destination}</p>
-                                <p>{plane.departureTime}</p>
-                                <p>{plane.arrivalTime}</p>
-                                <p>{plane.price}</p>
-                                <p>{plane.flightName}</p>
-                                <p>{plane.flightNumber}</p>
+                                <p>Departure:{ moment(plane.departureTime).format('MMMM Do YYYY, h:mm a')} </p>
+                                <p>Arrival: { moment(plane.arrivalTime).format('MMMM Do YYYY, h:mm a')}</p>
+                                <p>Price: {plane.price}</p>
+                                <p>Airline: {plane.flightName}</p>
+                                <p>Flights: {plane.flightNumber}</p>
                             </div>
                         ))}
                     </div>

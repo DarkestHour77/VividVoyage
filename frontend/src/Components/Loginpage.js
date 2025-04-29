@@ -41,7 +41,7 @@ function Loginpage (){
                         <br/>
                         <label for="password" className="password" >Password</label><br/>
                         <input type="password" id="password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
-                        <button onClick={handleLogin} className="button">Login</button>
+                        <button onClick={handleLogin} className="loginbutton">Login</button>
                     </form>
                 </div>
             </div>

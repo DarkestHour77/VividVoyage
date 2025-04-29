@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet ,useLocation } from "react-router-dom";
+import { Plane, User } from 'lucide-react';
 
 function Navbar(){
 
@@ -17,20 +18,19 @@ function Navbar(){
         <div className="">
             <nav>
                 <ul>
-                <li>
-                    <Link to="/">Home</Link>
+                <li className="logo">
+                    <Link to="/">{<img src="/Images/logo.png" />}</Link>
                 </li>
                 <li>
+                    <p><Plane size={30} /></p>
                     <Link to="/flights">Flights</Link>
                 </li>
                 <li>
-                    <Link to="/hotels">Hotels</Link>
-                </li>
-                <li>
+                    <p><User size={30} /></p>
                     <Link to="/login">Login</Link>
                 </li>
                 <li>
-                    <Link to="/signup">SignIn</Link>
+                    <Link to="/signup">Register</Link>
                 </li>
                 <li>
                     <Link to="/dashboard">Dashboard</Link>

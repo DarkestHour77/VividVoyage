@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function Signuppage (){
+function SignInpage (){
 
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -28,8 +28,10 @@ function Signuppage (){
 
         }catch(err){
             console.error(err)
+        }finally{
+            
+            navigate('/flights');
         }
-        navigate('/flights');
     }
 
     return(
@@ -46,7 +48,7 @@ function Signuppage (){
                         <label for="password" className="password" >Password</label><br/>
                         <input type="password" id="password" name="password"  value={password} onChange={(e)=>setPassword(e.target.value)}/>
                         
-                        <button onClick={handleLogin} className="button">Register</button>
+                        <button onClick={handleLogin} className="loginbutton">Register</button>
                     </form>
                 </div>
             </div>
@@ -54,4 +56,4 @@ function Signuppage (){
     )
 }
 
-export default Signuppage;
+export default SignInpage;
