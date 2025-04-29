@@ -3,7 +3,6 @@ const BookingModel = require("../Model/BookingSchema");
 async function createBookings(req, res) {
     
     try{
-        console.log(req.userId.id)
         const booking = new BookingModel({
             origin: req.body.origin,
             destination: req.body.destination,

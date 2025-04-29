@@ -64,7 +64,7 @@ async function login(req, res){
             const authData = {
                 user: {id: user._id}
             }
-            const token = jwt.sign(authData, secretKey,{expiresIn: "100000"})
+            const token = jwt.sign(authData, secretKey,{expiresIn: "1000000"})
 
             res.status(200).json({
                 success: true,

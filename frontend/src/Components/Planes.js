@@ -101,20 +101,17 @@ function Planes(){
 
    const handleSubmit = async(flight) =>{
         try{
-            const response = await axios.post('http://localhost:8080/flights/cities/booking',{
-                origin: flight.origin,
+            const bookingFlightData = JSON.stringify(
+                {origin: flight.origin,
                 destination: flight.destination,
                 departureTime: flight.departureTime,
                 arrivalTime: flight.arrivalTime,
                 flightName: flight.flightName,
                 flightNumber: flight.flightNumber,
-                price: flight.price,
-
-            },{
-                headers:{
-                'Authorization': "bearer " + localStorage.getItem("token"),
-            }
-        })
+                price: flight.price,}
+            )
+            
+            const response = localStorage.setItem('bookingFlight', bookingFlightData ) 
         }catch(err){
             console.error(err)
         }finally{

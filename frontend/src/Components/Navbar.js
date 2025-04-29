@@ -20,7 +20,6 @@ function Navbar(){
         setAdmin(isAdminParse)
 
         const response = localStorage.getItem('token')
-        console.log(response)
         setIsLoggedIn(response)
 
          
@@ -45,7 +44,7 @@ function Navbar(){
                     </li>
                         <li>
                             <p><LayoutDashboard size={25} /></p>
-                            <Link to="/dashboard">Dashboard</Link>
+                            <Link to="/flights/cities/dashboard">Dashboard</Link>
                         </li>
                     </>
                  :   

@@ -4,9 +4,9 @@ import Navbar from "./Navbar";
 import Planes from "./Planes";
 import Loginpage from "./Loginpage";
 import SignInpage from "./SignInpage";
-import Dashboard from "./Dashboard";
+import Bookings from "./Bookings";
 import Adminpanel from "./Adminpanel";
-import Booking from "./Booking";
+import Dashboard from "./Dashboard";
 
 function Router(){
     return(
@@ -19,9 +19,9 @@ function Router(){
                         <Route path="/login" element={<Loginpage />}  />
                         <Route path="/flights/cities" element={<Planes />}  />
                         <Route path="/signup" element={<SignInpage />}  />
-                        <Route path="/dashboard" element={<Dashboard />}  />
+                        <Route path="/flights/cities/booking" element={<Bookings />}  />
                         <Route path="/adminpanel" element={<Adminpanel />}  />
-                        <Route path="/flights/cities/booking" element={<Booking />}  />
+                        <Route path="/flights/cities/dashboard" element={<Dashboard />}  />
                     </Route>
 
                 </Routes>
