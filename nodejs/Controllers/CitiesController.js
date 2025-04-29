@@ -7,14 +7,12 @@ async function findFlights(req, res){
     const origin = body.origin;
     const destination = body.destination;
     const departureTime = body.departureTime;
-    const arrivalTime = body.arrivalTime;
 
     try{
         const flight = await Flights.find({
             origin,
             destination,
-            departureTime: {$gte: moment(departureTime), $lte: moment(departureTime).add(1, 'days')},
-            arrivalTime: {$gte: moment(arrivalTime), $lte: moment(arrivalTime).add(1, 'days')}
+            departureTime: { $lte: moment(departureTime)},
         })
         res.status(200).json(flight)
     }catch(err){

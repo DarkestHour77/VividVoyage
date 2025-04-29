@@ -11,7 +11,13 @@ function Dashboard(){
 
         const getBookings = async () =>{
             try{
-                const response = await axios.get('http://localhost:8080/flights/cities/dashboard');
+                const response = await axios.get('http://localhost:8080/flights/cities/dashboard',
+                    {
+                        headers:{
+                            'Authorization': "bearer " + localStorage.getItem("token"),
+                        }
+                    }
+                );
                 setBooked(response.data);
             }catch(err){
             console.error(err);

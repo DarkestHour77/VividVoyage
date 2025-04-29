@@ -1,30 +1,16 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { fakerEN_US as faker } from "@faker-js/faker"
 import axios from "axios"
 
 
 function Flights(){
 
     const Navigate = useNavigate();
-    
-    // faker.seed(220);
-    // const ci
-
-    // const cities = useMemo(() => {
-    //     const cityset = new Set();
-
-    //     while(cityset.size < 100){
-    //         cityset.add(faker.location.city());
-    //     }
-
-    //     return Array.from(cityset);
-    // },[])
+   
 
     const [selectedFromCity, setSelectedFromCity] = useState("");
     const [selectedToCity, setSelectedToCity] = useState("");
     const [departDate, setDepartDate] = useState("");
-    const [returnDate, setReturnDate] = useState("");
 
 
     
@@ -36,7 +22,6 @@ function Flights(){
                     origin: selectedFromCity,
                     destination: selectedToCity,
                     departureTime: departDate,
-                    arrivalTime: returnDate,
             },{
                 headers:{
                     'Authorization': "bearer " + localStorage.getItem("token"),
@@ -108,18 +93,7 @@ function Flights(){
                         />
                     </div>
                 </div>
-                <div className="travel return">
-                    <p>Return</p>
-                    <div class="select">
-                       <input
-                            type="date"
-                            id="arrivalTime"
-                            name="arrivalTime"
-                            value={returnDate}
-                            onChange={(e)=> setReturnDate(e.target.value)}
-                        /> 
-                    </div>
-                </div>
+                
             </div>
         </div>
             <div className="search button">

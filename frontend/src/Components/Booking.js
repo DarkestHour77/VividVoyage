@@ -10,7 +10,11 @@ function Booking(){
 
         const startBooking = async() =>{
             try{
-                const response = await axios.get('http://localhost:8080/flights/cities/booking')
+                const response = await axios.get('http://localhost:8080/flights/cities/booking',{
+                    headers:{
+                        'Authorization': "bearer " + localStorage.getItem("token"),
+                    }
+                })
                 setbooking(response.data)
             }catch(error){
                 console.error(error)
@@ -18,7 +22,7 @@ function Booking(){
         }
         startBooking();
     },[])
-
+    
     return(
         <>
             <div className="booking">

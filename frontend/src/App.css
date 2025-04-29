@@ -7,15 +7,18 @@
 }
 /* FlightsTravel */
 .travel.template {
+
   max-width: 1200px;
-  margin: 40px auto 20px;
+  margin: 100px auto 50px;
   padding: 0 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .travel.plan {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 20px;
+  height: 200px;
   background-color: #fff;
   border-radius: 12px;
   padding: 30px;
@@ -203,6 +206,16 @@ nav ul li a.active {
   nav ul li {
     margin: 0.5rem 0;
   }
+}
+.navbutton{
+  border: none;
+  background-color: white;
+  color: #555;
+  padding: 0;
+}
+.navbutton:hover {
+  color: #007bff;
+  background-color: white;
 }
 /* Planes */
 .planes{

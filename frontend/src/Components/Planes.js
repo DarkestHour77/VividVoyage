@@ -110,7 +110,11 @@ function Planes(){
                 flightNumber: flight.flightNumber,
                 price: flight.price,
 
-            })
+            },{
+                headers:{
+                'Authorization': "bearer " + localStorage.getItem("token"),
+            }
+        })
         }catch(err){
             console.error(err)
         }finally{

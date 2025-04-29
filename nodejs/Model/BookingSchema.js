@@ -8,6 +8,7 @@ const BookingSchema = new Schema({
     flightName: {type: String, required: true},
     flightNumber: {type: String, required: true},
     price: { type: String, required: true},
+    userId: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 
 module.exports = mongoose.model("Booking", BookingSchema )
