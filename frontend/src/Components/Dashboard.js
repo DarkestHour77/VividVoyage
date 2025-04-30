@@ -10,7 +10,7 @@ function Dashboard(){
 
         const startBooking = async() =>{
             try{
-                const response = await axios.get('http://localhost:8080/flights/cities/booking',{
+                const response = await axios.get('/api/flights/cities/booking',{
                     headers:{
                         'Authorization': "bearer " + localStorage.getItem("token"),
                     }

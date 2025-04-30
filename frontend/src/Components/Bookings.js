@@ -25,7 +25,7 @@ function Bookings(){
     },[])
 
     const buy = async() =>{
-        const buyingFLight = await axios.post('http://localhost:8080/flights/cities/booking',{
+        const buyingFLight = await axios.post('/api/flights/cities/booking',{
             origin: booked.origin,
             destination: booked.destination,
             departureTime: booked.departureTime,

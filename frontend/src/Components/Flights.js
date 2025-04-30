@@ -18,7 +18,7 @@ function Flights(){
         e.preventDefault();
 
         try{
-            const response = await axios.post('http://localhost:8080/flights/cities',{
+            const response = await axios.post('/api/flights/cities',{
                     origin: selectedFromCity,
                     destination: selectedToCity,
                     departureTime: departDate,

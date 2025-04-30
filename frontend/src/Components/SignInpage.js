@@ -15,7 +15,7 @@ function SignInpage (){
         e.preventDefault();
 
         try{
-            await axios.post('http://localhost:8080/auth/signup',{
+            await axios.post('/api/auth/signup',{
                 email: email,
                 username: username,
                 password: password,

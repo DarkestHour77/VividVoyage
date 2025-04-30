@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const getFlights = async () => {
     try{
-        const response = await axios.get('http://localhost:8080/admin/adminpanel')
+        const response = await axios.get('/api/admin/adminpanel')
         return response.data;
     }catch(error){
         throw new Error('Network response was not ok');
@@ -14,7 +14,7 @@ const getFlights = async () => {
 }
 const createFlight = async (flightData) => {
     try{
-        const response = await axios.post('http://localhost:8080/admin/adminpanel',flightData)
+        const response = await axios.post('/api/admin/adminpanel',flightData)
         return response.data;
     }catch(error){
         throw new Error ("Failed to create the Flight")
@@ -22,7 +22,7 @@ const createFlight = async (flightData) => {
 }
 const updateFlight = async (id, flightData) => {
     try{
-        const response = await axios.put(`http://localhost:8080/admin/adminpanel/${id}`, flightData)
+        const response = await axios.put(`/api/admin/adminpanel/${id}`, flightData)
         return response.data
     }catch(error){
         throw new Error ("Failed to update the Flight")
@@ -30,7 +30,7 @@ const updateFlight = async (id, flightData) => {
 }
 const deleteFlight = async (id) =>{
     try{
-        const response = await axios.delete(`http://localhost:8080/admin/adminpanel/${id}`)
+        const response = await axios.delete(`/api/admin/adminpanel/${id}`)
         return response.data
     }catch(error){
         throw new Error ("Failed to delete the Flight")

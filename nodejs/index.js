@@ -15,12 +15,6 @@ dotenv.config()
 server.use(cors());
 server.use(express.json());
 
-//Middleware
-server.use((req, res, next)=>{
-    req.PASSWORD = process.env.PASSWORD;
-    next();
-})
-
 //Routes
 server.use("/flights/", CityRoute ) 
 server.use("/auth/", AuthRoute ) 
